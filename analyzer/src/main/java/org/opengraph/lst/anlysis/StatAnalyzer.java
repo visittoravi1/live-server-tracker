@@ -1,5 +1,6 @@
 package org.opengraph.lst.anlysis;
 
+import org.opengraph.lst.core.StringUtil;
 import org.opengraph.lst.core.beans.Stat;
 import org.opengraph.lst.core.beans.Summary;
 import org.opengraph.lst.core.events.SummaryEvent;
@@ -47,6 +48,7 @@ public class StatAnalyzer {
             LOGGER.error("Found more than one flow name for request with id {}", id);
             return null;
         }
+        summary.setFlow(stats.stream().map(Stat::getFlow).distinct().findFirst().orElse(StringUtil.EMPTY));
         Map<String, List<Stat>> group = stats.stream().collect(groupingBy(Stat::getApp));
         for (Map.Entry<String, List<Stat>> entry: group.entrySet()) {
             String app = entry.getKey();
