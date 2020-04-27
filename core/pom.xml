@@ -11,6 +11,7 @@
 
     <groupId>org.opengraph.lst</groupId>
     <artifactId>core</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

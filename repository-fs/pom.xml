@@ -9,7 +9,9 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
+    <groupId>org.opengraph.lst</groupId>
     <artifactId>repository-fs</artifactId>
+    <packaging>jar</packaging>
 
     <dependencies>
         <dependency>

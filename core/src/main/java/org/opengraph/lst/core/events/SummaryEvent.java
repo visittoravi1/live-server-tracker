@@ -7,7 +7,12 @@ import org.springframework.context.ApplicationEvent;
  */
 public class SummaryEvent extends ApplicationEvent {
 
-    public SummaryEvent(Object source) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public SummaryEvent(Object source) {
         super(source);
     }
 }

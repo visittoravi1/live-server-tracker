@@ -23,7 +23,7 @@ public class SummaryAnalyzer {
     }
 
     public Map<String, AppAnalysis> getAppAnalysis(Optional<String> app) {
-        return app.isEmpty() ? appAnalysis : Map.of(app.get(), appAnalysis.get(app));
+        return app.isEmpty() ? appAnalysis : Map.of(app.get(), appAnalysis.get(app.get()));
     }
 
     public void analyzeSummary(Summary summary) {

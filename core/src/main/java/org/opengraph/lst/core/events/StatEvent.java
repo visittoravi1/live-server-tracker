@@ -8,7 +8,12 @@ import org.springframework.context.ApplicationEvent;
  */
 public class StatEvent extends ApplicationEvent {
 
-    public StatEvent(Object source) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public StatEvent(Object source) {
         super(source);
     }
 }

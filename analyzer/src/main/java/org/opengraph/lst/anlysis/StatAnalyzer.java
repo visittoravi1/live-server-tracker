@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.util.CollectionUtils;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class StatAnalyzer {
         this.publisher = publisher;
     }
 
+    @Async
     public void analyze(@NonNull String id) {
         Summary summary = createSummary(id, repository.get(id));
         if (summary != null && !summary.isIncomplete()) {

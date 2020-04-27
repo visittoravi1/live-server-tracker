@@ -8,7 +8,12 @@ import org.springframework.context.ApplicationEvent;
  */
 public class BackupEvent extends ApplicationEvent {
 
-    public BackupEvent(Object source) {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public BackupEvent(Object source) {
         super(source);
     }
 }
