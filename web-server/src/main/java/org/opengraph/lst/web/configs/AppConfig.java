@@ -16,6 +16,7 @@ import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 
+import java.util.UUID;
 import java.util.concurrent.Executor;
 
 @Configuration
@@ -28,6 +29,7 @@ public class AppConfig extends AsyncConfigurerSupport {
     private ApplicationEventPublisher publisher;
 
     public Executor getAsyncExecutor() {
+        LOGGER.info("UUID - {}", UUID.nameUUIDFromBytes("Test".getBytes()).toString());
         ThreadPoolTaskExecutor executor = new ThreadPoolTaskExecutor();
         executor.setCorePoolSize(100);
         executor.setMaxPoolSize(1000);

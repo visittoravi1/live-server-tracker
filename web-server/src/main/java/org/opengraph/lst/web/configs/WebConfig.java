@@ -1,10 +1,14 @@
 package org.opengraph.lst.web.configs;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
 import org.springframework.http.converter.ByteArrayHttpMessageConverter;
 import org.springframework.http.converter.HttpMessageConverter;
+import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
@@ -25,6 +29,12 @@ public class WebConfig implements WebMvcConfigurer {
             if (converter instanceof ByteArrayHttpMessageConverter) {
                 ByteArrayHttpMessageConverter bamc = (ByteArrayHttpMessageConverter) converter;
                 bamc.setSupportedMediaTypes(getSupportedMediaTypes());
+            }
+            if (converter instanceof MappingJackson2HttpMessageConverter) {
+                MappingJackson2HttpMessageConverter mjhc = (MappingJackson2HttpMessageConverter)converter;
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.registerModule(new JavaTimeModule());
+                ((MappingJackson2HttpMessageConverter) converter).setObjectMapper(mapper);
             }
         }
     }
