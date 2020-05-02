@@ -1,4 +1,4 @@
-package org.opengraph.lst.core;
+package org.opengraph.lst.core.util;
 
 /**
  * @author ravi
