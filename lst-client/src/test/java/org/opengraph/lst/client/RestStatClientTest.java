@@ -17,7 +17,10 @@ public class RestStatClientTest {
         stat.setId(uuid.toString());
         stat.setReceivedOn(LocalDateTime.now().minusSeconds(5));
         stat.setType(Stat.Type.START);
-        RestStatClient client = new RestStatClient("http://localhost:8080/lst");
+        RestStatClient client = new RestStatClient("http://localhost:8081/lst");
+        client.sendStat(stat);
+        stat.setType(Stat.Type.END);
+        stat.setReceivedOn(LocalDateTime.now());
         client.sendStat(stat);
     }
 }

@@ -5,9 +5,11 @@ package org.opengraph.lst.core.beans;
  */
 public class AppAnalysis {
     private String app;
-    private long sum;
+    private double sum;
     private double average;
     private long count;
+    private long min;
+    private long max;
     private Range range;
 
     public AppAnalysis() {
@@ -16,6 +18,7 @@ public class AppAnalysis {
 
     public AppAnalysis(String app) {
         this.app = app;
+        range = new Range();
     }
 
     public String getApp() {
@@ -26,11 +29,11 @@ public class AppAnalysis {
         this.app = app;
     }
 
-    public long getSum() {
+    public double getSum() {
         return sum;
     }
 
-    public void setSum(long sum) {
+    public void setSum(double sum) {
         this.sum = sum;
     }
 
@@ -48,6 +51,22 @@ public class AppAnalysis {
 
     public void setCount(long count) {
         this.count = count;
+    }
+
+    public long getMin() {
+        return min;
+    }
+
+    public void setMin(long min) {
+        this.min = min;
+    }
+
+    public long getMax() {
+        return max;
+    }
+
+    public void setMax(long max) {
+        this.max = max;
     }
 
     public Range getRange() {

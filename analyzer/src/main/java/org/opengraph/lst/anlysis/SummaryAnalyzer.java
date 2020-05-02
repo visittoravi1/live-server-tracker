@@ -14,7 +14,7 @@ import java.util.stream.Collectors;
  */
 public class SummaryAnalyzer {
 
-    private Map<String, AppAnalysis> appAnalysis;
+    private Map<String, Map<String, AppAnalysis>> appAnalysis;
     private Map<String, AppAnalysis> overallAnalysis;
 
     public SummaryAnalyzer() {
@@ -22,28 +22,43 @@ public class SummaryAnalyzer {
         this.overallAnalysis = new ConcurrentHashMap<>();
     }
 
-    public Map<String, AppAnalysis> getAppAnalysis(Optional<String> app) {
-        return app.isEmpty() ? appAnalysis : Map.of(app.get(), appAnalysis.get(app.get()));
+    public Map<String, Map<String, AppAnalysis>> getAppAnalysis(Optional<String> flow) {
+        return flow.isEmpty() ? appAnalysis : Map.of(flow.get(), appAnalysis.get(flow.get()));
     }
 
     public void analyzeSummary(Summary summary) {
         if (summary.isIncomplete()) {
             return;
         }
+        // Get flow of the summary
+        appAnalysis.compute(summary.getFlow(), (key, val) -> {
+            if (val == null) {
+                val = new ConcurrentHashMap<>();
+            }
+            return val;
+        });
         summary.getTimelines().entrySet().forEach(e -> {
             String app = e.getKey();
-            appAnalysis.compute(app, (key, val) -> {
+            appAnalysis.get(summary.getFlow()).compute(app, (key, val) -> {
                 if (val == null) {
                     val = new AppAnalysis(app);
+                    val.setMin(Long.MAX_VALUE);
+                    val.setMax(Long.MIN_VALUE);
                 }
-                val.setSum(val.getSum() + e.getValue().getTimeToComplete());
+                val.setSum(val.getSum() + ((double)e.getValue().getTimeToComplete() / 1000));
                 val.setCount(val.getCount() + 1);
-                val.setAverage(val.getSum() / val.getCount());
+                val.setAverage((val.getSum() * 1000) / val.getCount());
                 if (val.getRange().getEnd() == null || val.getRange().getEnd().isBefore(e.getValue().getEnd())) {
                     val.getRange().setEnd(e.getValue().getEnd());
                 }
                 if (val.getRange().getStart() == null || val.getRange().getStart().isAfter(e.getValue().getStart())) {
                     val.getRange().setStart(e.getValue().getStart());
+                }
+                if (e.getValue().getTimeToComplete() > val.getMax()) {
+                    val.setMax(e.getValue().getTimeToComplete());
+                }
+                if (e.getValue().getTimeToComplete() < val.getMin()) {
+                    val.setMin(e.getValue().getTimeToComplete());
                 }
                 return val;
             });
@@ -59,7 +74,7 @@ public class SummaryAnalyzer {
             }
             val.setSum(val.getSum() + summary.getTimelines().values().stream().map(Summary.Timeline::getTimeToComplete).collect(Collectors.summingLong(Long::longValue)));
             val.setCount(val.getCount() + 1);
-            val.setAverage(val.getSum() / val.getCount());
+            val.setAverage((double)val.getSum() / val.getCount());
             LocalDateTime maxEndDateTime = summary.getTimelines().values().stream().map(Summary.Timeline::getEnd).max(LocalDateTime::compareTo).orElse(null);
             LocalDateTime minStartDateTime = summary.getTimelines().values().stream().map(Summary.Timeline::getStart).min(LocalDateTime::compareTo).orElse(null);
             if (minStartDateTime != null && (val.getRange().getStart() == null || val.getRange().getStart().isAfter(minStartDateTime))) {

@@ -1,6 +1,7 @@
 package org.opengraph.lst.client;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import org.opengraph.lst.core.beans.Stat;
 import org.opengraph.lst.core.client.StatClient;
@@ -27,6 +28,7 @@ public class RestStatClient implements StatClient {
         restTemplate = new RestTemplate(new BufferingClientHttpRequestFactory(new SimpleClientHttpRequestFactory()));
         ObjectMapper mapper = new ObjectMapper();
         mapper.registerModule(new JavaTimeModule());
+        mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
         restTemplate.setMessageConverters(List.of(new MappingJackson2HttpMessageConverter(mapper)));
         restTemplate.setInterceptors(List.of(new LoggingRequestInterceptor()));
     }
