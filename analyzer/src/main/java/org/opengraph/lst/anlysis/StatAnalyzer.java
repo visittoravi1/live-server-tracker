@@ -6,7 +6,9 @@ import org.opengraph.lst.core.repos.StatRepository;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.lang.NonNull;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.stereotype.Component;
 
+@Component
 public class StatAnalyzer extends Analyzer{
 
     private StatRepository repository;

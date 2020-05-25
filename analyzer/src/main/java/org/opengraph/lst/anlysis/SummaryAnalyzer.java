@@ -1,17 +1,19 @@
 package org.opengraph.lst.anlysis;
 
+import org.apache.commons.lang3.StringUtils;
 import org.opengraph.lst.core.beans.AppAnalysis;
 import org.opengraph.lst.core.beans.Summary;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDateTime;
 import java.util.Map;
-import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 /**
  * Analyze a summary
  */
+@Component
 public class SummaryAnalyzer {
 
     private Map<String, Map<String, AppAnalysis>> appAnalysis;
@@ -22,8 +24,13 @@ public class SummaryAnalyzer {
         this.overallAnalysis = new ConcurrentHashMap<>();
     }
 
-    public Map<String, Map<String, AppAnalysis>> getAppAnalysis(Optional<String> flow) {
-        return flow.isEmpty() ? appAnalysis : Map.of(flow.get(), appAnalysis.get(flow.get()));
+    /**
+     * Get analysis by flowName
+     * @param flow - flowName
+     * @return - Analysis for the give flow, if flowName is null or empty then return analysis for all of the flow
+     */
+    public Map<String, Map<String, AppAnalysis>> getAppAnalysis(String flow) {
+        return StringUtils.isEmpty(flow) ? appAnalysis :  Map.of(flow, appAnalysis.get(flow));
     }
 
     public void analyzeSummary(Summary summary) {

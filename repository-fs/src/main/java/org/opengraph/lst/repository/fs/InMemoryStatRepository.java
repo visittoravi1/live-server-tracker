@@ -8,12 +8,14 @@ import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author ravi
  *
- * An in memory implemnetation of {@link StatRepository}
+ * An in memory implementation of {@link StatRepository}
  */
 public class InMemoryStatRepository implements StatRepository {
 
@@ -41,4 +43,9 @@ public class InMemoryStatRepository implements StatRepository {
     public List<Stat> get(String id) {
         return store.get(id);
     }
+
+	@Override
+	public List<Stat> get() {
+		return store.values().parallelStream().flatMap(Collection::stream).collect(Collectors.toList());
+	}
 }
