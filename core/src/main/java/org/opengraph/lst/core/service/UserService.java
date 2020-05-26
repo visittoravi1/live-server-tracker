@@ -1,5 +1,7 @@
 package org.opengraph.lst.core.service;
 
+import org.opengraph.lst.core.beans.User;
+
 public interface UserService {
 	
 	/**
@@ -10,4 +12,12 @@ public interface UserService {
 	 * @return
 	 */
 	String login(String username, String password);
+	
+	/**
+	 * Get user by username
+	 * 
+	 * @param userName
+	 * @return
+	 */
+	User get(String userName);
 }

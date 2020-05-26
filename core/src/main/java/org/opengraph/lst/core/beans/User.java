@@ -1,5 +1,7 @@
 package org.opengraph.lst.core.beans;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 public class User {
 	
 	private String userName;
@@ -12,6 +14,8 @@ public class User {
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
+	
+	@JsonIgnore
 	public String getPassword() {
 		return password;
 	}

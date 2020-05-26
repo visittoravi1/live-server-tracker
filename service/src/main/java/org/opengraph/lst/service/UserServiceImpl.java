@@ -1,10 +1,12 @@
 package org.opengraph.lst.service;
 
+import org.opengraph.lst.core.beans.User;
+import org.opengraph.lst.core.exceptions.ResourceNotFoundException;
 import org.opengraph.lst.core.repos.UserRepository;
 import org.opengraph.lst.core.service.UserService;
 import org.opengraph.lst.core.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.InsufficientAuthenticationException;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +29,12 @@ public class UserServiceImpl implements UserService {
 		return repository.get(username)
 				.filter(user -> this.encoder.matches(password, user.getPassword()))
 				.map(jwtUtil::generateToken)
-				.orElseThrow(() -> new InsufficientAuthenticationException("Wrong Credentials"));
+				.orElseThrow(() -> new BadCredentialsException("Wrong Credentials"));
+	}
+
+	@Override
+	public User get(String userName) {
+		return repository.get(userName).orElseThrow(() -> new ResourceNotFoundException(User.class.getSimpleName(), userName));
 	}
 
 }

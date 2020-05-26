@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.AsyncConfigurerSupport;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -30,6 +31,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 		"org.opengraph.lst.core.repos", "org.opengraph.lst.core.util", "org.opengraph.lst.anlysis", 
 		"org.opengraph.lst.service"
 		})
+@Import(value = {SecurityConfig.class})
 public class AppConfig extends AsyncConfigurerSupport {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(AppConfig.class);
