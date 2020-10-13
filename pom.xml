@@ -25,7 +25,7 @@
         <maven.compiler.target>14</maven.compiler.target>
         <version.jackson.databind>2.10.3</version.jackson.databind>
         <version.javax.servlet>4.0.1</version.javax.servlet>
-        <version.junit>4.13</version.junit>
+        <version.junit>4.13.1</version.junit>
         <version.slf4j>1.7.30</version.slf4j>
         <version.spring>5.2.6.RELEASE</version.spring>
         <version.spring.security>5.3.2.RELEASE</version.spring.security>
