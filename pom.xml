@@ -27,7 +27,7 @@
         <version.javax.servlet>4.0.1</version.javax.servlet>
         <version.junit>4.13</version.junit>
         <version.slf4j>1.7.30</version.slf4j>
-        <version.spring>5.2.6.RELEASE</version.spring>
+        <version.spring>5.3.18</version.spring>
         <version.spring.security>5.3.2.RELEASE</version.spring.security>
         <!-- Plugin versions -->
         <version.plugin.maven.compiler>3.8.1</version.plugin.maven.compiler>
