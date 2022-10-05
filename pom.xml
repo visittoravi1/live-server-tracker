@@ -23,7 +23,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>14</maven.compiler.source>
         <maven.compiler.target>14</maven.compiler.target>
-        <version.jackson.databind>2.10.3</version.jackson.databind>
+        <version.jackson.databind>2.12.6.1</version.jackson.databind>
         <version.javax.servlet>4.0.1</version.javax.servlet>
         <version.junit>4.13</version.junit>
         <version.slf4j>1.7.30</version.slf4j>
